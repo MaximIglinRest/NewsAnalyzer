@@ -70,7 +70,7 @@ def collect_news_texts(news_links: list[str]):
 
 
 start_time = time.monotonic()
-news_links = collect_news_urls(url, 400)
+news_links = collect_news_urls(url, 20)
 news_texts = collect_news_texts(
     news_links
 )
