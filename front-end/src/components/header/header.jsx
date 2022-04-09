@@ -1,17 +1,17 @@
 import React from 'react';
 import './header.css';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const Header = () => {
   function renderLinks(links) {
     return links.map((link, index) => {
       return (
         <li key={index}>
-          <Link
+          <NavLink
             to={link.to}
           >
             {link.label}
-          </Link>
+          </NavLink>
         </li>
       )
     })
