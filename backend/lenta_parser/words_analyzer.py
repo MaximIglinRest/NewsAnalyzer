@@ -5,6 +5,8 @@ import typing
 import pymorphy2
 from collections import Counter
 
+from backend.lenta_parser.configuration import stop_terms
+
 morph = pymorphy2.MorphAnalyzer(lang="ru")
 
 def split_text_to_words(texts: list):
@@ -22,7 +24,7 @@ def get_words_in_normal_form(words: typing.Iterable):
     This function with Ml do word in normal form
     """
     words = (
-        morph.parse(word)[0].normal_form for word in words
+        morph.parse(word)[0].normal_form for word in words if morph.parse(word)[0].normal_form not in stop_terms
     )
     return words
 

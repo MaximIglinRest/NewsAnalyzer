@@ -1,11 +1,9 @@
-import sys
 import time
 
 import requests
 from bs4 import BeautifulSoup
 
-from backend.lenta_parser.words_analyzer import split_text_to_words, get_words_in_normal_form, count_words, \
-    get_only_nouns
+from backend.lenta_parser.words_analyzer import split_text_to_words, count_words, get_only_nouns
 
 start_url = "https://lenta.ru"
 url = "https://lenta.ru/parts/news/"
@@ -17,8 +15,8 @@ def collect_news_titles(url: str, items: int):
     """
     titles = []
     for i in range(items // 20):
+        time.sleep(0.2)
         if i > 0:
-            time.sleep(0.5)
             if i == 1:
                 url += "2"
             else:
@@ -36,8 +34,8 @@ def collect_news_urls(url: str, items: int):
     """
     news_urls = []
     for i in range(items // 20):
+        time.sleep(0.2)
         if i > 0:
-            time.sleep(0.5)
             if i == 1:
                 url += "2"
             else:
@@ -58,11 +56,11 @@ def collect_news_texts(news_links: list[str]):
     """
     content_texts = []
     for link in news_links:
-        time.sleep(0.5)
+        time.sleep(0.2)
         if link.startswith(start_url):
             response = requests.get(url=link)
             parsed_response = BeautifulSoup(response.text, "lxml")
-            content_texts += [content.text for content in parsed_response.find_all("div", "topic-page__container")]
+            content_texts += [content.text for content in parsed_response.find_all("p", "topic-body__content-text")]
         else:
             continue
     return content_texts
@@ -70,7 +68,7 @@ def collect_news_texts(news_links: list[str]):
 
 
 start_time = time.monotonic()
-news_links = collect_news_urls(url, 20)
+news_links = collect_news_urls(url, 100)
 news_texts = collect_news_texts(
     news_links
 )
@@ -83,5 +81,5 @@ start_time = time.monotonic()
 normal_words = get_only_nouns(text_words)
 print("Достаём существительные: ", time.monotonic() - start_time)
 start_time = time.monotonic()
-counter = count_words(normal_words, 10)
+counter = count_words(normal_words, 100)
 print("Считаем слова: ", time.monotonic() - start_time)
