@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from pydantic.utils import to_camel
+from starlette.middleware.trustedhost import TrustedHostMiddleware
 
 from backend.lenta_parser.parser import lenta_analyzer
 from fastapi.middleware.cors import CORSMiddleware
@@ -13,11 +14,7 @@ origins = [
 ]
 
 app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    TrustedHostMiddleware, allowed_hosts=["example.com", "*.example.com"]
 )
 
 class TopWordsRequestSchema(BaseModel):
