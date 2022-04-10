@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+from pydantic.utils import to_camel
 
 from lenta_parser.parser import lenta_analyzer
 
@@ -13,6 +14,9 @@ class TopWordsRequestSchema(BaseModel):
     analyze_by: str
     words_count: int
     news_count: int
+    class Config:
+        alias_generator = to_camel
+        allow_population_by_field_name = True
 
 class TopWordsResponseSchema(BaseModel):
     label: str
