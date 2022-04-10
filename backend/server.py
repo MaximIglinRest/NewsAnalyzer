@@ -12,6 +12,7 @@ class TopWordsRequestSchema(BaseModel):
     verbs: bool
     analyze_by: str
     words_count: int
+    news_count: int
 
 class TopWordsResponseSchema(BaseModel):
     label: str
@@ -20,7 +21,7 @@ class TopWordsResponseSchema(BaseModel):
 @app.post("/get-top-words")
 def get_top_words_api(top_words_schema: TopWordsRequestSchema) -> TopWordsResponseSchema:
     if top_words_schema.source == 1:
-        response = lenta_analyzer(**top_words_schema)
+        response = lenta_analyzer(**top_words_schema.dict())
     return response
 
 
