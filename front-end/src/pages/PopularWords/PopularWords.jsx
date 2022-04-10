@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './PopularWords.css';
 import DoughnutChart from '../../components/Charts/DoughnutChart/DoughnutChart';
 import VerticalBarCharts from '../../components/Charts/VerticalBarChart/VerticalBarChart';
 import LineChart from '../../components/Charts/LineChart/LineChart';
-import BubbleChart from '../../components/Charts/BubbleChart/BubbleChart';
 //Ui components
 import Select from '../../components/UI/Select/Select';
 import Input from '../../components/UI/Input/Input';
@@ -16,10 +15,16 @@ const PopularWords = () => {
 
   const [state, setState] = useState({
     source: 1,
+    analyzeBy: 'byTitle',
     wordsCount: 100,
-    nouns: 'false',
-    verbs: 'false',
-    percent: 'false'
+    newsCount: 100,
+    nouns: false,
+    verbs: false,
+    percent: false
+  })
+
+  useEffect(() => {
+    console.log(JSON.stringify(state))
   })
 
   const [loader, setLoader] = useState({loader: false})
@@ -46,21 +51,45 @@ const PopularWords = () => {
   //
   // }
 
-  const selectChangeHandler = event => {
+  const analyzeChoses = {
+    1: 'byTitle',
+    2: 'byText'
+  }
+
+
+  const analyzeSelectorChangeHandler = event => {
+    let chose = '';
+    if(+event.target.value == 1) {
+      chose = 'byTitle'
+    } else if(+event.target.value == 2) {
+      chose = 'byText'
+    }
+
+    setState(state => ({
+      ...state,
+      analyzeBy: chose
+    }))
+  }
+
+  const sourceSelectorChangeHandler = event => {
     setState(state => ({
       ...state,
       source: +event.target.value
     }))
-    console.log('source: ',state.source)
-    console.log(JSON.stringify(state))
   }
 
-  const inputChangeHandler = event => {
+  const WordsCountChangeHandler = event => {
     setState(state => ({
       ...state,
       wordsCount: event.target.value,
     }))
-    console.log('wordsCount: ',state.wordsCount)
+  }
+
+  const NewsCountChangeHandler = event => {
+    setState(state => ({
+      ...state,
+      newsCount: event.target.value,
+    }))
   }
 
   const checkBoxChangeHandler = (label) => {
@@ -68,13 +97,12 @@ const PopularWords = () => {
       ...state,
       [label]: !state[label]
     }))
-    console.log(label,': ',state[label])
   }
 
-  const select = <Select
+  const sourceSelector = <Select
     label='Источник'
     value={state.category}
-    onChange={selectChangeHandler}
+    onChange={sourceSelectorChangeHandler}
     options={[
       {text: 'Риа новости', value: 1},
       {text: 'ТАСС', value: 2},
@@ -83,17 +111,34 @@ const PopularWords = () => {
     ]}
   />
 
-  const input = <Input
+  const analyzeSelector = <Select
+    label='Анализ по:'
+    value={state.category}
+    onChange={analyzeSelectorChangeHandler}
+    options={[
+      {text: 'По заголовку', value: 1},
+      {text: 'По тексту', value: 2},
+    ]}
+  />
+
+  const Wordcount = <Input
     index={'count' + 1}
-    label='Слова'
+    label='Слова:'
     type='number'
-    onChange={event => inputChangeHandler(event)}
+    onChange={event => WordsCountChangeHandler(event)}
+  />
+
+  const NewsCount = <Input
+    index={'count' + 1}
+    label='Количество новостей:'
+    type='number'
+    onChange={event => NewsCountChangeHandler(event)}
   />
 
   const checkBox = <CheckBox checkValues={[
     {label: 'nouns', text: 'Существительные'},
     {label: 'verbs', text: 'Глаголы'},
-    {label: 'percent', text: 'Проценты'},
+    {label: 'percent', text: 'Отобразить в процентах'},
   ]}
      checkBoxChangeHandler={checkBoxChangeHandler}
   >Выберите нужные графики:</CheckBox>
@@ -101,8 +146,10 @@ const PopularWords = () => {
   return (
     <div className='PopularWords'>
       <div className="ToolBar">
-        { select }
-        { input }
+        { sourceSelector }
+        { analyzeSelector }
+        { NewsCount }
+        { Wordcount }
         { checkBox }
         <Button>Анализ</Button>
       </div>

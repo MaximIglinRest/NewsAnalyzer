@@ -33,6 +33,169 @@ const VerticalBarChart = () => {
     },
   };
 
+  const response = [
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    },
+    {
+      "label": "Украина",
+      "count": 25
+    }
+  ]
+
   const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
 
   const data = {
