@@ -3,7 +3,7 @@ import time
 import requests
 from bs4 import BeautifulSoup
 
-from backend.lenta_parser.words_analyzer import split_text_to_words, count_words, get_only_nouns
+from .words_analyzer import split_text_to_words, count_words, get_only_nouns, get_only_verbs, get_words_in_normal_form
 
 start_url = "https://lenta.ru"
 url = "https://lenta.ru/parts/news/"
@@ -66,20 +66,26 @@ def collect_news_texts(news_links: list[str]):
     return content_texts
 
 
+def lenta_analyzer(nouns: bool, verbs: bool, percent: bool, analyze_by: str, news_count: int, words_count: int):
+    analyzed_words = []
+    if analyze_by == "by_titles":
+        news_titles = collect_news_titles(url, news_count)
+        titles_words = split_text_to_words(news_titles)
+        if verbs and not nouns:
+            analyzed_words = get_only_verbs(titles_words)
+        elif nouns and not verbs:
+            analyzed_words = get_only_nouns(titles_words)
+        if not nouns and not verbs:
+            analyzed_words = []
+        else:
+            analyzed_words = get_words_in_normal_form(titles_words)
 
-start_time = time.monotonic()
-news_links = collect_news_urls(url, 100)
-news_texts = collect_news_texts(
-    news_links
-)
-print("Time for requests", time.monotonic() - start_time)
 
-start_time = time.monotonic()
-text_words = split_text_to_words(news_texts)
-print("Разбиение текста на слова: ", time.monotonic() - start_time)
-start_time = time.monotonic()
-normal_words = get_only_nouns(text_words)
-print("Достаём существительные: ", time.monotonic() - start_time)
-start_time = time.monotonic()
-counter = count_words(normal_words, 100)
-print("Считаем слова: ", time.monotonic() - start_time)
+    counter = count_words(analyzed_words, words_count)
+    response = [
+        {
+        "label": word,
+        "count": count
+    } for word, count in counter
+    ]
+    return response
