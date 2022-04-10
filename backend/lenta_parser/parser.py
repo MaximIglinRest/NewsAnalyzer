@@ -75,7 +75,7 @@ def lenta_analyzer(nouns: bool, verbs: bool, percent: bool, analyze_by: str, new
             analyzed_words = get_only_verbs(titles_words)
         elif nouns and not verbs:
             analyzed_words = get_only_nouns(titles_words)
-        if not nouns and not verbs:
+        elif not nouns and not verbs:
             analyzed_words = []
         else:
             analyzed_words = get_words_in_normal_form(titles_words)
