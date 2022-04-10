@@ -2,9 +2,23 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from pydantic.utils import to_camel
 
-from lenta_parser.parser import lenta_analyzer
+from backend.lenta_parser.parser import lenta_analyzer
+from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI()
+
+origins = [
+    "http://127.0.0.1:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class TopWordsRequestSchema(BaseModel):
     source: int
