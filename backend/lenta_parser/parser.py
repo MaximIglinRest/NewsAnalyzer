@@ -66,7 +66,7 @@ def collect_news_texts(news_links: list[str]):
     return content_texts
 
 
-def lenta_analyzer(nouns: bool, verbs: bool, percent: bool, analyze_by: str, news_count: int, words_count: int):
+def lenta_analyzer(nouns: bool, verbs: bool, percent: bool, analyze_by: str, news_count: int, words_count: int, source: str):
     analyzed_words = []
     if analyze_by == "by_titles":
         news_titles = collect_news_titles(url, news_count)
@@ -79,7 +79,6 @@ def lenta_analyzer(nouns: bool, verbs: bool, percent: bool, analyze_by: str, new
             analyzed_words = []
         else:
             analyzed_words = get_words_in_normal_form(titles_words)
-
 
     counter = count_words(analyzed_words, words_count)
     response = [
