@@ -10,10 +10,10 @@ import {Routes, Route, Navigate} from 'react-router-dom';
 function App() {
   let routes = (
     <Routes>
-      <Route path='/' element={<PopularWords/>}/>
-      <Route path='/activity' element={<Activity/>}/>
-      <Route path='/news' element={<News/>}/>
-      <Route path='*' element={<Navigate replace to="/" />} />
+      <Route activeClass="active" path='/' element={<PopularWords/>}/>
+      <Route activeClass="active" path='/activity' element={<Activity/>}/>
+      <Route activeClass="active" path='/news' element={<News/>}/>
+      <Route activeClass="active" path='*' element={<Navigate replace to="/" />} />
     </Routes>
   )
 
