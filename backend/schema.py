@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import List
 
 from pydantic import BaseModel
@@ -25,3 +26,17 @@ class TopWordsResponseSchema(BaseModel):
 
 class ListTopWordsResponseSchema(BaseModel):
     __root__: List[TopWordsResponseSchema]
+
+
+class ActivityRequestSchema(BaseModel):
+    source: int
+    analyze_by: str
+
+    class Config:
+        alias_generator = to_camel
+        allow_population_by_field_name = True
+
+
+class ActivityResponseSchema(BaseModel):
+    analyzed_period: str
+    items: List[TopWordsResponseSchema]
