@@ -1,26 +1,31 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
 
-from lenta_parser.parser import lenta_analyzer
+from backend.lenta_parser.parser import lenta_analyzer
+from fastapi.middleware.cors import CORSMiddleware
+
+from backend.schema import TopWordsRequestSchema, TopWordsResponseSchema, ListTopWordsResponseSchema
 
 app = FastAPI()
 
-class TopWordsRequestSchema(BaseModel):
-    source: int
-    nouns: bool
-    percent: bool
-    verbs: bool
-    analyze_by: str
-    words_count: int
+origins = [
+    "localhosts:3000",
+]
 
-class TopWordsResponseSchema(BaseModel):
-    label: str
-    count: int
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 @app.post("/get-top-words")
-def get_top_words_api(top_words_schema: TopWordsRequestSchema) -> TopWordsResponseSchema:
+def get_top_words_api(
+    top_words_schema: TopWordsRequestSchema,
+) -> ListTopWordsResponseSchema:
     if top_words_schema.source == 1:
-        response = lenta_analyzer(**top_words_schema)
-    return response
-
-
+        response = lenta_analyzer(**top_words_schema.dict())
+    else:
+        response = lenta_analyzer(**top_words_schema.dict())
+    return ListTopWordsResponseSchema.parse_obj(response)
