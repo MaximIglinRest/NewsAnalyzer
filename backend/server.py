@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from backend.lenta_parser.parser import lenta_analyzer
+from backend.lenta_parser.top_words_parser import lenta_analyzer
 from fastapi.middleware.cors import CORSMiddleware
 
 from backend.schema import TopWordsRequestSchema, TopWordsResponseSchema, ListTopWordsResponseSchema
