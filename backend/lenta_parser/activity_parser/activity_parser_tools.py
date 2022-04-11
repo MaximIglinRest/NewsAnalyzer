@@ -60,7 +60,7 @@ def do_count_by_hours_parts(time_list: list):
     )
 
 
-def activity_lenta_raser(analyze_by: str, **kwargs):
+def activity_lenta_parser(analyze_by: str, **kwargs):
     started_date = datetime(year=2022, day=1, month=4)
     url = form_current_date_url(started_date)
 
@@ -84,4 +84,4 @@ def activity_lenta_raser(analyze_by: str, **kwargs):
     return analyzed_value
 
 
-print(activity_lenta_raser("by_day"))
+print(activity_lenta_parser("by_day"))

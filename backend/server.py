@@ -3,15 +3,14 @@ from datetime import datetime
 from fastapi import FastAPI
 
 from lenta_parser.activity_parser.activity_parser_tools import (
-    activity_lenta_raser,
+    activity_lenta_parser,
 )
 
 from fastapi.middleware.cors import CORSMiddleware
 
-from backend.lenta_parser.top_words_parser.top_words_parser import lenta_analyzer
+from lenta_parser.top_words_parser.top_words_parser import lenta_analyzer
 from backend.schema import (
     TopWordsRequestSchema,
-    TopWordsResponseSchema,
     ListTopWordsResponseSchema,
     ActivityRequestSchema,
     ActivityResponseSchema,
@@ -20,7 +19,7 @@ from backend.schema import (
 app = FastAPI()
 
 origins = [
-    "http://127.0.0.1:3000",
+    "localhosts:3000",
 ]
 
 app.add_middleware(
