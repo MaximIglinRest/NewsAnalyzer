@@ -2,7 +2,7 @@ from datetime import datetime
 
 from fastapi import FastAPI
 
-from backend.lenta_parser.activity_parser.activity_parser_tools import (
+from backend.lenta_parser.activity_parser.activity_parser import (
     activity_lenta_parser,
 )
 
