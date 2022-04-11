@@ -2,14 +2,14 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from pydantic.utils import to_camel
 
-from backend.lenta_parser.parser import lenta_analyzer
+from lenta_parser.parser import lenta_analyzer
 from fastapi.middleware.cors import CORSMiddleware
 
 
 app = FastAPI()
 
 origins = [
-    "localhosts:3000",
+    "http://127.0.0.1:3000",
 ]
 
 app.add_middleware(

@@ -10,7 +10,7 @@ import {
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 
-const VerticalBarChart = () => {
+const VerticalBarChart = props => {
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -33,184 +33,75 @@ const VerticalBarChart = () => {
     },
   };
 
-  const response = [
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    }
-  ]
+  const labels = props.chartSetting.map((item) => {
+    return item['label'];
+  })
 
-  const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  const renderDatasets = () => {
+    props.chartSetting.map((item) => {
+      return (
+        {
+          label: item['label'],
+          data: item['count'],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+          ],
+        }
+      )
+    })
+  }
 
   const data = {
     labels,
     datasets: [
       {
-        label: 'Dataset 1',
-        data: [-1000,1000],
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
-      },
+        label: 'Найдено в 400-ах новостях',
+        data: props.chartSetting.map((item) => {
+          return item['count'];
+        }),
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+        ],
+      }
     ],
   };
 
   return (
-    <div className='Bar'>
+    <div className='VerticalBarChart'>
       <Bar options={options} data={data} />;
     </div>
   );

@@ -5,7 +5,7 @@
 }
 
 .ToolBar{
-    width: 100vw;
+    width: 100%;
     /*background: #7cb6ab;*/
     display: flex;
     justify-content: left;
@@ -16,4 +16,11 @@
 
 .ToolBar > div {
     margin: 15px 50px;
+}
+
+.Charts {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+
 }
