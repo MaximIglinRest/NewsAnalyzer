@@ -1,3 +1,5 @@
+from typing import List
+
 from pydantic import BaseModel
 from pydantic.utils import to_camel
 
@@ -19,3 +21,7 @@ class TopWordsRequestSchema(BaseModel):
 class TopWordsResponseSchema(BaseModel):
     label: str
     count: int
+
+
+class ListTopWordsResponseSchema(BaseModel):
+    __root__: List[TopWordsResponseSchema]

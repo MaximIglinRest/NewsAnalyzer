@@ -109,5 +109,8 @@ def lenta_analyzer(
 
     # count collected words
     counter = count_words(analyzed_words, words_count)
+    if kwargs.get("percent", False):
+        sum_of_words = sum(item[1] for item in counter)
+        counter = [(word, round(count / sum_of_words * 100)) for word, count in counter]
     response = [{"label": word, "count": count} for word, count in counter]
     return response

@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from backend.lenta_parser.parser import lenta_analyzer
 from fastapi.middleware.cors import CORSMiddleware
 
-from backend.schema import TopWordsRequestSchema, TopWordsResponseSchema
+from backend.schema import TopWordsRequestSchema, TopWordsResponseSchema, ListTopWordsResponseSchema
 
 app = FastAPI()
 
@@ -23,7 +23,9 @@ app.add_middleware(
 @app.post("/get-top-words")
 def get_top_words_api(
     top_words_schema: TopWordsRequestSchema,
-) -> TopWordsResponseSchema:
+) -> ListTopWordsResponseSchema:
     if top_words_schema.source == 1:
         response = lenta_analyzer(**top_words_schema.dict())
-    return response
+    else:
+        response = lenta_analyzer(**top_words_schema.dict())
+    return ListTopWordsResponseSchema.parse_obj(response)
