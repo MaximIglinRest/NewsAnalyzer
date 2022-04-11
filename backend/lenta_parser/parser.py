@@ -3,10 +3,16 @@ import time
 import requests
 from bs4 import BeautifulSoup
 
-from .words_analyzer import split_text_to_words, count_words, get_only_nouns, get_only_verbs, get_words_in_normal_form
+from .words_analyzer import (
+    split_text_to_words,
+    count_words,
+    get_only_nouns,
+    get_only_verbs,
+    get_words_in_normal_form,
+)
 
 start_url = "https://lenta.ru"
-url = "https://lenta.ru/parts/news/"
+dynamic_url = "https://lenta.ru/parts/news/"
 
 
 def collect_news_titles(url: str, items: int):
@@ -24,7 +30,10 @@ def collect_news_titles(url: str, items: int):
         print(url)
         response = requests.get(url=url)
         parsed_response = BeautifulSoup(response.text, "lxml")
-        titles += [title.text for title in parsed_response.find_all("h3", "card-full-news__title")]
+        titles += [
+            title.text
+            for title in parsed_response.find_all("h3", "card-full-news__title")
+        ]
     return titles
 
 
@@ -45,7 +54,8 @@ def collect_news_urls(url: str, items: int):
         parsed_response = BeautifulSoup(response.text, "lxml")
         news_urls += [
             start_url + title.attrs.get("href", url)
-            for title in parsed_response.find_all("a", "card-full-news") if title.attrs.get("href", url).startswith("/")
+            for title in parsed_response.find_all("a", "card-full-news")
+            if title.attrs.get("href", url).startswith("/")
         ]
     return news_urls
 
@@ -60,31 +70,44 @@ def collect_news_texts(news_links: list[str]):
         if link.startswith(start_url):
             response = requests.get(url=link)
             parsed_response = BeautifulSoup(response.text, "lxml")
-            content_texts += [content.text for content in parsed_response.find_all("p", "topic-body__content-text")]
+            content_texts += [
+                content.text
+                for content in parsed_response.find_all("p", "topic-body__content-text")
+            ]
         else:
             continue
     return content_texts
 
 
-def lenta_analyzer(nouns: bool, verbs: bool, percent: bool, analyze_by: str, news_count: int, words_count: int, source: str):
-    analyzed_words = []
+def lenta_analyzer(
+    nouns: bool,
+    verbs: bool,
+    analyze_by: str,
+    news_count: int,
+    words_count: int,
+    **kwargs
+):
+    """
+    This function for collect data for analyzed
+    """
+    texts = []
+    # collect news texts from titles or from news-content
     if analyze_by == "by_titles":
-        news_titles = collect_news_titles(url, news_count)
-        titles_words = split_text_to_words(news_titles)
-        if verbs and not nouns:
-            analyzed_words = get_only_verbs(titles_words)
-        elif nouns and not verbs:
-            analyzed_words = get_only_nouns(titles_words)
-        elif not nouns and not verbs:
-            analyzed_words = []
-        else:
-            analyzed_words = get_words_in_normal_form(titles_words)
+        texts = collect_news_titles(dynamic_url, news_count)
+    if analyze_by == "by_texts":
+        news_links = collect_news_urls(dynamic_url, news_count)
+        texts = collect_news_texts(news_links)
+    analyzed_words = split_text_to_words(texts)
 
+    # get correct part of speech
+    if verbs and not nouns:
+        analyzed_words = get_only_verbs(analyzed_words)
+    elif nouns and not verbs:
+        analyzed_words = get_only_nouns(analyzed_words)
+    else:
+        analyzed_words = get_words_in_normal_form(analyzed_words)
+
+    # count collected words
     counter = count_words(analyzed_words, words_count)
-    response = [
-        {
-        "label": word,
-        "count": count
-    } for word, count in counter
-    ]
+    response = [{"label": word, "count": count} for word, count in counter]
     return response
