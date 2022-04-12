@@ -2,14 +2,12 @@ from datetime import datetime
 
 from fastapi import FastAPI
 
-from lenta_parser.activity_parser.activity_parser_tools import (
-    activity_lenta_parser,
-)
 
 from fastapi.middleware.cors import CORSMiddleware
 
+from lenta_parser.activity_parser.activity_parser import activity_lenta_parser
 from lenta_parser.top_words_parser.top_words_parser import lenta_analyzer
-from backend.schema import (
+from schema import (
     TopWordsRequestSchema,
     ListTopWordsResponseSchema,
     ActivityRequestSchema,
@@ -46,7 +44,7 @@ def get_top_words_api(
 def get_period_activity_api(
     activity_schema: ActivityRequestSchema,
 ) -> ActivityResponseSchema:
-    parsed_data = activity_lenta_raser(**activity_schema.dict())
+    parsed_data = activity_lenta_parser(**activity_schema.dict())
     response = {
         "analyzed_period": f"{datetime.now().year}/{datetime.now().month}/{datetime.now().day}",
         "items": [

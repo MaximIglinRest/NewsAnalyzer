@@ -4,7 +4,7 @@ import typing
 import pymorphy2
 from collections import Counter
 
-from backend.lenta_parser.top_words_parser.configuration import stop_terms
+from lenta_parser.top_words_parser.configuration import stop_terms
 
 morph = pymorphy2.MorphAnalyzer(lang="ru")
 
@@ -26,8 +26,8 @@ def get_words_in_normal_form(words: typing.Iterable):
     words = (
         morph.parse(word)[0].normal_form
         for word in words
-        if morph.parse(word)[0].tag.POS in {"INFN", "NOUN"} and word not in
-        stop_terms
+        if morph.parse(word)[0].tag.POS in {"INFN", "NOUN"} and
+        morph.parse(word)[0].normal_form not in stop_terms
     )
     return words
 

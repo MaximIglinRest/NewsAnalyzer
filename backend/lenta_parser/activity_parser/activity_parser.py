@@ -4,7 +4,7 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 
-from backend.lenta_parser.activity_parser.activity_parser_tools import (
+from lenta_parser.activity_parser.activity_parser_tools import (
     form_current_date_url,
     do_count_by_hours_parts,
     form_current_urls_for_daterange_parser,
