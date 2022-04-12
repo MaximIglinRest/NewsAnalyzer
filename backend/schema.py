@@ -43,7 +43,7 @@ class ActivityResponseSchema(BaseModel):
 
 class CategoryItemSchema(BaseModel):
     id: int
-    label: str
+    name: str
 
 
 class ListCategoriesResponseSchema(BaseModel):

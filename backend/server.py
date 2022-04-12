@@ -71,7 +71,7 @@ def get_categories_list() -> ListCategoriesResponseSchema:
     """
     API получения списка категорий для отображения в форме поиска
     """
-    response = [{"id": category, "label": categories_dict[category]["label"]} for category in categories_dict]
+    response = [{"id": category, "name": categories_dict[category]["label"]} for category in categories_dict]
     return ListCategoriesResponseSchema.parse_obj(response)
 
 
