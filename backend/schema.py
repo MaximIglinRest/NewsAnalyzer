@@ -1,4 +1,3 @@
-from datetime import datetime
 from typing import List
 
 from pydantic import BaseModel
@@ -40,3 +39,25 @@ class ActivityRequestSchema(BaseModel):
 class ActivityResponseSchema(BaseModel):
     analyzed_period: str
     items: List[TopWordsResponseSchema]
+
+
+class CategoryItemSchema(BaseModel):
+    id: int
+    label: str
+
+
+class ListCategoriesResponseSchema(BaseModel):
+    __root__: List[CategoryItemSchema]
+
+
+class CategoryActivityRequestSchema(ActivityRequestSchema):
+    categories: List[int]
+
+
+class CategoryCountSchema(BaseModel):
+    label: str
+    count: int
+
+
+class ListCategoryCountResponseSchema(BaseModel):
+    __root__: List[CategoryCountSchema]
