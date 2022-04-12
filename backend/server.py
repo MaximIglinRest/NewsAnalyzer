@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from fastapi import FastAPI
 
@@ -20,6 +20,7 @@ from schema import (
     CategoryActivityRequestSchema,
     ListCategoryCountResponseSchema,
 )
+from services import get_current_period
 
 app = FastAPI()
 
@@ -57,9 +58,10 @@ def get_period_activity_api(
     """
     API для получения активности по новостям за выбранный период
     """
+    period = get_current_period(activity_schema.analyze_by)
     parsed_data = activity_lenta_parser(**activity_schema.dict())
     response = {
-        "analyzed_period": f"{datetime.now().year}/{datetime.now().month}/{datetime.now().day}",
+        "analyzed_period": f"{period}",
         "items": [
             {"label": time_period, "count": count}
             for time_period, count in parsed_data.items()
@@ -88,8 +90,9 @@ def get_category_activity(
     """
     API для получения активности по категориям по выбранному периуду и категориям
     """
+    period = get_current_period(category_activity_schema.analyze_by)
     response = {
-        "analyzed_period": f"{datetime.now().year}/{datetime.now().month}/{datetime.now().day}",
+        "analyzed_period": f"{period}",
         "items": [
             {"label": category, "count": count}
             for category, count in category_lenta_parser(
@@ -97,4 +100,4 @@ def get_category_activity(
             ).items()
         ],
     }
-    return ListCategoryCountResponseSchema(response)
+    return ListCategoryCountResponseSchema(**response)
