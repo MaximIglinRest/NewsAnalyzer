@@ -2,7 +2,7 @@ from datetime import date, timedelta
 import pandas as pd
 
 
-def form_current_date_url(started_date):
+def form_current_date_url(started_date, category="world"):
     """
     funtion for form url for current_date
     """
@@ -14,7 +14,7 @@ def form_current_date_url(started_date):
     current_day = (
         started_date.day if len(str(started_date.day)) == 2 else f"0{started_date.day}"
     )
-    current_url = f"https://lenta.ru/rubrics/world/{started_date.year}/{current_month}/{current_day}/page/"
+    current_url = f"https://lenta.ru/rubrics/{category}/{started_date.year}/{current_month}/{current_day}/page/"
     return current_url
 
 
@@ -57,6 +57,24 @@ def get_dates_for_week(days_ago: int) -> list:
     return date_range
 
 
-def form_current_urls_for_daterange_parser(dates):
-    date_range_urls = [f"https://lenta.ru/rubrics/world/{date}/page/" for date in dates]
+def form_current_urls_for_daterange_parser(dates, category="world"):
+    date_range_urls = [
+        f"https://lenta.ru/rubrics/{category}/{date}/page/" for date in dates
+    ]
     return date_range_urls
+
+
+categories_dict = {
+    1: {"label": "Россия", "link_label": "russia"},
+    2: {"label": "Мир", "link_label": "world"},
+    3: {"label": "Бывший СССР", "link_label": "ussr"},
+    4: {"label": "Экономика", "link_label": "economics"},
+    5: {"label": "Силовые структуры", "link_label": "forces"},
+    6: {"label": "Наука и техника", "link_label": "science"},
+    7: {"label": "Культура", "link_label": "culture"},
+    8: {"label": "Спорт", "link_label": "sport"},
+    9: {"label": "Интернет и СМИ", "link_label": "media"},
+    10: {"label": "Ценности", "link_label": "style"},
+    11: {"label": "Путешествия", "link_label": "travel"},
+    12: {"label": "Из жизни", "link_label": "life"},
+}
