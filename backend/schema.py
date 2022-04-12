@@ -60,4 +60,5 @@ class CategoryCountSchema(BaseModel):
 
 
 class ListCategoryCountResponseSchema(BaseModel):
-    __root__: List[CategoryCountSchema]
+    analyzed_period: str
+    items: List[CategoryCountSchema]

@@ -2,19 +2,22 @@ from datetime import datetime
 
 from fastapi import FastAPI
 
-from backend.lenta_parser.activity_parser.activity_parser import (
-    activity_lenta_parser, category_lenta_parser,
+from lenta_parser.activity_parser.activity_parser import (
+    activity_lenta_parser,
+    category_lenta_parser,
 )
 
 from fastapi.middleware.cors import CORSMiddleware
 
-from backend.lenta_parser.activity_parser.activity_parser_tools import categories_dict
-from backend.lenta_parser.top_words_parser.top_words_parser import lenta_analyzer
-from backend.schema import (
+from lenta_parser.activity_parser.activity_parser_tools import categories_dict
+from lenta_parser.top_words_parser.top_words_parser import lenta_analyzer
+from schema import (
     TopWordsRequestSchema,
     ListTopWordsResponseSchema,
     ActivityRequestSchema,
-    ActivityResponseSchema, ListCategoriesResponseSchema, CategoryActivityRequestSchema,
+    ActivityResponseSchema,
+    ListCategoriesResponseSchema,
+    CategoryActivityRequestSchema,
     ListCategoryCountResponseSchema,
 )
 
@@ -71,14 +74,27 @@ def get_categories_list() -> ListCategoriesResponseSchema:
     """
     API получения списка категорий для отображения в форме поиска
     """
-    response = [{"id": category, "name": categories_dict[category]["label"]} for category in categories_dict]
+    response = [
+        {"id": category, "name": categories_dict[category]["label"]}
+        for category in categories_dict
+    ]
     return ListCategoriesResponseSchema.parse_obj(response)
 
 
 @app.post("/category-activity")
-def get_category_activity(category_activity_schema: CategoryActivityRequestSchema) -> ListCategoryCountResponseSchema:
+def get_category_activity(
+    category_activity_schema: CategoryActivityRequestSchema,
+) -> ListCategoryCountResponseSchema:
     """
     API для получения активности по категориям по выбранному периуду и категориям
     """
-    response = [{"label": category, "count": count} for category, count in category_lenta_parser(**category_activity_schema.dict()).items()]
-    return ListCategoryCountResponseSchema.parse_obj(response)
+    response = {
+        "analyzed_period": f"{datetime.now().year}/{datetime.now().month}/{datetime.now().day}",
+        "items": [
+            {"label": category, "count": count}
+            for category, count in category_lenta_parser(
+                **category_activity_schema.dict()
+            ).items()
+        ],
+    }
+    return ListCategoryCountResponseSchema(response)
