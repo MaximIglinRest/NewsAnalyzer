@@ -4,7 +4,7 @@ import typing
 import pymorphy2
 from collections import Counter
 
-from backend.lenta_parser.top_words_parser.configuration import stop_terms
+from lenta_parser.top_words_parser.configuration import stop_terms
 
 morph = pymorphy2.MorphAnalyzer(lang="ru")
 
