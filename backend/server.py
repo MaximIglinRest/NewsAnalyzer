@@ -45,9 +45,15 @@ def get_top_words_api(
     API для получения топ слов по выбранному источнику и количеству новостей
     """
     if top_words_schema.source == 1:
-        response = lenta_analyzer(**top_words_schema.dict())
+        response = {
+            "words_count": top_words_schema.words_count,
+            "items": lenta_analyzer(**top_words_schema.dict())
+        }
     else:
-        response = lenta_analyzer(**top_words_schema.dict())
+        response = {
+            "words_count": top_words_schema.words_count,
+            "items": lenta_analyzer(**top_words_schema.dict())
+        }
     return ListTopWordsResponseSchema.parse_obj(response)
 
 

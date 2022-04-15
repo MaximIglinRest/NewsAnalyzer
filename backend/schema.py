@@ -24,7 +24,8 @@ class TopWordsResponseSchema(BaseModel):
 
 
 class ListTopWordsResponseSchema(BaseModel):
-    __root__: List[TopWordsResponseSchema]
+    words_count: int
+    items: List[TopWordsResponseSchema]
 
 
 class ActivityRequestSchema(BaseModel):
