@@ -57,7 +57,6 @@ def activity_lenta_parser(analyze_by: str, category="world", **kwargs):
         for url, day in zip(page_urls, days):
             news = collect_news_times(url)
             analyzed_value[datetime.strptime(day, "%Y/%m/%d").strftime("%d-%m-%Y")] = len(news)
-            print(analyzed_value)
 
     elif analyze_by == "by_month":
         days = get_dates_for_week(days_ago=30)
@@ -66,7 +65,6 @@ def activity_lenta_parser(analyze_by: str, category="world", **kwargs):
         for url, day in zip(page_urls, days):
             news = collect_news_times(url)
             analyzed_value[datetime.strptime(day, "%Y/%m/%d").strftime("%d-%m-%Y")] = len(news)
-            print(analyzed_value)
 
     return analyzed_value
 
