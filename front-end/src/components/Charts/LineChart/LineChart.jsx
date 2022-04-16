@@ -11,134 +11,53 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import { Color } from '../../../hoc/Layout/Layout';
 
+const LineChart = props => {
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
+  );
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
-
-const response = [
-  {
-    "label": "Украина",
-    "count": 25
-  },
-  {
-    "label": "Украина",
-    "count": 25
-  },
-  {
-    "label": "Украина",
-    "count": 25
-  },
-  {
-    "label": "Украина",
-    "count": 25
-  },
-  {
-    "label": "Украина",
-    "count": 25
-  },
-  {
-    "label": "Украина",
-    "count": 25
-  },
-  {
-    "label": "Украина",
-    "count": 25
-  },
-  {
-    "label": "Украина",
-    "count": 25
-  },
-  {
-    "label": "Украина",
-    "count": 25
-  },
-  {
-    "label": "Украина",
-    "count": 25
-  },
-  {
-    "label": "Украина",
-    "count": 25
-  },
-  {
-    "label": "Украина",
-    "count": 25
-  },
-  {
-    "label": "Украина",
-    "count": 25
-  },
-  {
-    "label": "Украина",
-    "count": 25
-  },
-  {
-    "label": "Украина",
-    "count": 25
-  },
-  {
-    "label": "Украина",
-    "count": 25
-  },
-  {
-    "label": "Украина",
-    "count": 25
-  },
-  {
-    "label": "Украина",
-    "count": 25
-  },
-  {
-    "label": "Украина",
-    "count": 25
-  },
-  {
-    "label": "Украина",
-    "count": 25
-  }
-]
-
-const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'top',
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: true,
+        text: `Линейная диаграмма ${props.title}.`,
+      },
     },
-    title: {
-      display: true,
-      text: 'Chart.js Line Chart',
-    },
-  },
-};
+  };
 
-const labels = response.map((item) => {
-  return item['label'];
-})
+  const labels = props.chartSetting.map((item) => {
+    return item['label'];
+  })
 
-const data = {
-  labels,
-  datasets: [
-    {
-      label: 'Dataset 1',
-      data: [-1000,1000,200],
-      borderColor: 'rgb(255, 99, 132)',
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
-    },
-  ],
-};
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: props.label,
+        data: props.chartSetting.map((item) => {
+          return item['count'];
+        }),
+        borderColor: Color,
+        backgroundColor: Color,
+      }
+    ],
+  };
 
-const LineChart = () => {
   return (
-    <div>
-      <Line options={options} data={data} />;
+    <div className='LineChart'>
+      <Line options={options} data={data} />
     </div>
   );
 };

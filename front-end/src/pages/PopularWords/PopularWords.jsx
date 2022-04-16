@@ -1,157 +1,168 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState} from 'react';
 import './PopularWords.css';
-import DoughnutChart from '../../components/Charts/DoughnutChart/DoughnutChart';
-import VerticalBarCharts from '../../components/Charts/VerticalBarChart/VerticalBarChart';
-import LineChart from '../../components/Charts/LineChart/LineChart';
-//Ui components
-import Select from '../../components/UI/Select/Select';
+import axios from "../../axios/axios";
+//UI components
 import Input from '../../components/UI/Input/Input';
-import Button from '../../components/UI/Button/Button';
-import CheckBox from '../../components/UI/CheckBox/CheckBox';
+import Button from "../../components/UI/Button/Button";
+import Select from "../../components/UI/Select/Select";
+import CheckBox from "../../components/UI/CheckBox/CheckBox";
+import Loader from "../../components/UI/Loader/Loader";
+//Charts components
+import DoughnutChart from "../../components/Charts/DoughnutChart/DoughnutChart";
+import VerticalBarCharts from "../../components/Charts/VerticalBarChart/VerticalBarChart";
 
-const url = '';
+const url = 'http://127.0.0.1:8000/';
 
 const PopularWords = () => {
-
-  const [state, setState] = useState({
-    source: 1,
-    analyzeBy: 'byTitle',
-    wordsCount: 100,
-    newsCount: 100,
-    nouns: false,
-    verbs: false,
-    percent: false
+  const [PopularWordsState, setPopularWordsState] = useState({
+    Source: 1,
+    AnalyzeBy: 'by_titles',
+    WordsCount: 20,
+    NewsCount: 20,
+    Nouns: false,
+    Verbs: false,
+    Percent: false
   })
 
-  useEffect(() => {
-    console.log(JSON.stringify(state))
-  })
+  const [chartSetting, setChartSettings] = useState()
 
   const [loader, setLoader] = useState({loader: false})
 
-//  TODO: 1) Сформировать функцию запроса и поставки.
-//        2) Создать стейт.
-//        3) Передать и обработать параметры в каждом элементе,
-//        для каждой страницы.
-//        4) Создать анимацию загрузки.
-//        5) Обработать ошибки запросов.
-
-  const AnalyzeSettings = JSON.stringify(state)
-
-  const fetchAnalyzeSettings = () => {
-    // const response = await axios.post(url, AnalyzeSettings)
-    //setLoader(!loader.loader)
+  const FetchAnalyzeSettings = async () => {
+    const AnalyzeSettings = JSON.stringify(PopularWordsState)
+    setLoader({loader: true})
+    try {
+      const response = await axios.post('top-words', AnalyzeSettings, {'headers': {'accept': 'application/json', 'Content-Type': 'application/json'}});
+      setChartSettings(response.data)
+      setLoader({loader: false})
+    } catch (e) {
+      setLoader({loader: false})
+      console.error(e);
+    }
   }
-
-
-  // try {
-  //   const response = await axios.get(url)
-  //   setLoader(!loader.loader)
-  // } catch (e) {
-  //
-  // }
-
-  const analyzeChoses = {
-    1: 'byTitle',
-    2: 'byText'
-  }
-
 
   const analyzeSelectorChangeHandler = event => {
     let chose = '';
     if(+event.target.value == 1) {
-      chose = 'byTitle'
+      chose = 'by_titles'
     } else if(+event.target.value == 2) {
-      chose = 'byText'
+      chose = 'by_texts'
     }
 
-    setState(state => ({
-      ...state,
-      analyzeBy: chose
+    setPopularWordsState(PopularWordsState => ({
+      ...PopularWordsState,
+      AnalyzeBy: chose
     }))
   }
 
   const sourceSelectorChangeHandler = event => {
-    setState(state => ({
-      ...state,
-      source: +event.target.value
+    setPopularWordsState(PopularWordsState => ({
+      ...PopularWordsState,
+      Source: +event.target.value
     }))
   }
 
   const WordsCountChangeHandler = event => {
-    setState(state => ({
-      ...state,
-      wordsCount: event.target.value,
+    setPopularWordsState(PopularWordsState => ({
+      ...PopularWordsState,
+      WordsCount: event.target.value,
     }))
   }
 
   const NewsCountChangeHandler = event => {
-    setState(state => ({
-      ...state,
-      newsCount: event.target.value,
+    setPopularWordsState(PopularWordsState => ({
+      ...PopularWordsState,
+      NewsCount: event.target.value,
     }))
   }
 
-  const checkBoxChangeHandler = (label) => {
-    setState(state => ({
-      ...state,
-      [label]: !state[label]
+  const checkBoxChangeHandler = label => {
+    setPopularWordsState(PopularWordsState => ({
+      ...PopularWordsState,
+      [label]: !PopularWordsState[label]
     }))
   }
 
   const sourceSelector = <Select
-    label='Источник'
-    value={state.category}
     onChange={sourceSelectorChangeHandler}
+    label='Источник'
+    value={PopularWordsState.category}
     options={[
-      {text: 'Риа новости', value: 1},
-      {text: 'ТАСС', value: 2},
-      {text: 'Lenta.ru', value: 3},
-      {text: 'Комсомольская правда', value: 4}
+      {text: 'Lenta.ru', value: 1},
+      {text: 'Риа новости', value: 2},
+      {text: 'ТАСС', value: 3},
+      {text: 'Комсомольская правда', value: 4},
     ]}
   />
 
   const analyzeSelector = <Select
-    label='Анализ по:'
-    value={state.category}
     onChange={analyzeSelectorChangeHandler}
+    label='Анализ по:'
+    value={PopularWordsState.category}
     options={[
       {text: 'По заголовку', value: 1},
       {text: 'По тексту', value: 2},
     ]}
   />
 
-  const Wordcount = <Input
-    index={'count' + 1}
-    label='Слова:'
-    type='number'
+  const WordCount = <Input
     onChange={event => WordsCountChangeHandler(event)}
+    label='Слов:'
+    index={'count' + 1}
+    type='number'
+    step={1}
+    min={2}
+    max={30}
   />
 
   const NewsCount = <Input
-    index={'count' + 1}
-    label='Количество новостей:'
-    type='number'
     onChange={event => NewsCountChangeHandler(event)}
+    label='Новостей:'
+    index={'count' + 1}
+    type='number'
+    step={20}
+    min={20}
+    max={400}
   />
 
-  const checkBox = <CheckBox checkValues={[
-    {label: 'nouns', text: 'Существительные'},
-    {label: 'verbs', text: 'Глаголы'},
-    {label: 'percent', text: 'Отобразить в процентах'},
-  ]}
-     checkBoxChangeHandler={checkBoxChangeHandler}
-  >Выберите нужные графики:</CheckBox>
+  const checkBox = <CheckBox
+    checkBoxChangeHandler={checkBoxChangeHandler}
+    options={[
+      {label: 'Nouns', text: 'Существительные'},
+      {label: 'Verbs', text: 'Глаголы'},
+      {label: 'Percent', text: 'Отобразить в процентах'},
+    ]}
+  >
+    Параметры анализатора:
+  </CheckBox>
 
   return (
     <div className='PopularWords'>
-      <div className="ToolBar">
+      <div className="PopularWordsToolBar">
         { sourceSelector }
         { analyzeSelector }
         { NewsCount }
-        { Wordcount }
+        { WordCount }
+        <span className="break"/>
         { checkBox }
-        <Button>Анализ</Button>
+        <Button onClick={FetchAnalyzeSettings}>Анализ</Button>
+      </div>
+
+      <div className='PopularWordsCharts'>
+
+        { loader.loader
+          ? <Loader/>
+          : chartSetting
+            ? (
+          <>
+            <DoughnutChart chartSetting={chartSetting.items}/>
+            <VerticalBarCharts
+              title='топ слов'
+              chartSetting={chartSetting.items}
+              label={`Анализ ${chartSetting.words_count} слов.`}/>
+          </>
+        )
+            : null}
       </div>
     </div>
   );

@@ -19,9 +19,9 @@ const Header = () => {
   }
 
   const links = [
-    {to: '/',label: 'Популярные слова'},
+    {to: '/',label: 'Топ слова'},
     {to: '/activity',label: 'Активность'},
-    {to: '/news',label: 'Количество новостей'},
+    {to: '/news',label: 'Активность по категориям'},
   ]
 
   return (

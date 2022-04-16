@@ -1,7 +1,6 @@
 .Input {
     display: inline-block;
     position: relative;
-    width: 200px;
     margin-bottom: 6px;
 }
 
@@ -33,6 +32,6 @@
 }
 
 .Input input:focus {
-    border: 1px solid #007bff;
+    border: 1px solid #0096fb;
     transition: all .1s ease-in-out;
 }

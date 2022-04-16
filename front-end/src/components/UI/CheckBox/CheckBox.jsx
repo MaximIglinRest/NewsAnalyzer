@@ -3,7 +3,7 @@ import './CheckBox.css';
 
 const CheckBox = props => {
   function renderCheckItems () {
-    return props.checkValues.map(check => {
+    return props.options.map(check => {
       return (
         <div key={check.label} >
           <input

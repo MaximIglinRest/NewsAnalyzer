@@ -1,4 +1,5 @@
 import React from 'react';
+import './VerticalBarChart.css';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,8 +10,9 @@ import {
   Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
+import { Color } from '../../../hoc/Layout/Layout';
 
-const VerticalBarChart = () => {
+const VerticalBarChart = props => {
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -28,190 +30,31 @@ const VerticalBarChart = () => {
       },
       title: {
         display: true,
-        text: 'Chart.js Bar Chart',
+        text: `Столбчатая диаграмма ${props.title}.`,
       },
     },
   };
 
-  const response = [
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    },
-    {
-      "label": "Украина",
-      "count": 25
-    }
-  ]
-
-  const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  const labels = props.chartSetting.map((item) => {
+    return item['label'];
+  })
 
   const data = {
     labels,
     datasets: [
       {
-        label: 'Dataset 1',
-        data: [-1000,1000],
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
-      },
+        label: props.label,
+        data: props.chartSetting.map((item) => {
+          return item['count'];
+        }),
+        backgroundColor: Color,
+      }
     ],
   };
 
   return (
-    <div className='Bar'>
-      <Bar options={options} data={data} />;
+    <div className='VerticalBarChart'>
+      <Bar options={options} data={data} />
     </div>
   );
 };

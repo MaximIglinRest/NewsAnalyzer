@@ -24,4 +24,42 @@ class TopWordsResponseSchema(BaseModel):
 
 
 class ListTopWordsResponseSchema(BaseModel):
-    __root__: List[TopWordsResponseSchema]
+    words_count: int
+    items: List[TopWordsResponseSchema]
+
+
+class ActivityRequestSchema(BaseModel):
+    source: int
+    analyze_by: str
+
+    class Config:
+        alias_generator = to_camel
+        allow_population_by_field_name = True
+
+
+class ActivityResponseSchema(BaseModel):
+    analyzed_period: str
+    items: List[TopWordsResponseSchema]
+
+
+class CategoryItemSchema(BaseModel):
+    id: int
+    name: str
+
+
+class ListCategoriesResponseSchema(BaseModel):
+    __root__: List[CategoryItemSchema]
+
+
+class CategoryActivityRequestSchema(ActivityRequestSchema):
+    categories: List[int]
+
+
+class CategoryCountSchema(BaseModel):
+    label: str
+    count: int
+
+
+class ListCategoryCountResponseSchema(BaseModel):
+    analyzed_period: str
+    items: List[CategoryCountSchema]

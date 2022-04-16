@@ -5,7 +5,7 @@
     text-transform: uppercase;
     font-weight: bold;
     font-size: 20px;
-    background: #007bff;
+    background: #0096fb;
 }
 
 .Button button {
@@ -24,8 +24,9 @@
     display: block;
 }
 
-.Button:focus{
-    outline: none;
+.Button:hover{
+    background: rgba(0, 150, 251, 0.8);
+    transition: all .2s ease-in-out;
 }
 
 .Button:active {

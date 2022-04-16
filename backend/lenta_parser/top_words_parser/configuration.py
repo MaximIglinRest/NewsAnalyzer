@@ -26,4 +26,4 @@ stop_terms = {
 }
 
 
-sources = {{"id": 1, "name": "Lenta.ru"}}
+# sources = {{"id": 1, "name": "Lenta.ru"}}

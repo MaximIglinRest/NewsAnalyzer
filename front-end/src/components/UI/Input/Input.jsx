@@ -17,9 +17,9 @@ const Input = props => {
           placeholder={props.placeholder}
           value={props.value}
           onChange={props.onChange}
-          step={10}
-          min={0}
-          max={100}
+          step={props.step}
+          min={props.min}
+          max={props.max}
           required
         />
     </div>
