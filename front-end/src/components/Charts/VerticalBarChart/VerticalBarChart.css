@@ -1,3 +1,6 @@
-.VerticalBarChart {
-    width: 50vw;
+.LineChart {
+    max-width: 50%;
+    min-width: 33%;
+    max-height: 100%;
+    flex: 1 0 100px;
 }

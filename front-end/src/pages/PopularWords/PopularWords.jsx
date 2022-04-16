@@ -1,21 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState} from 'react';
 import './PopularWords.css';
-import axios from 'axios';
-import DoughnutChart from '../../components/Charts/DoughnutChart/DoughnutChart';
-import VerticalBarCharts from '../../components/Charts/VerticalBarChart/VerticalBarChart';
-// import LineChart from '../../components/Charts/LineChart/LineChart';
-//Ui components
-import Select from '../../components/UI/Select/Select';
+import axios from "../../axios/axios";
+//UI components
 import Input from '../../components/UI/Input/Input';
-import Button from '../../components/UI/Button/Button';
-import CheckBox from '../../components/UI/CheckBox/CheckBox';
-
+import Button from "../../components/UI/Button/Button";
+import Select from "../../components/UI/Select/Select";
+import CheckBox from "../../components/UI/CheckBox/CheckBox";
+import Loader from "../../components/UI/Loader/Loader";
+//Charts components
+import DoughnutChart from "../../components/Charts/DoughnutChart/DoughnutChart";
+import VerticalBarCharts from "../../components/Charts/VerticalBarChart/VerticalBarChart";
 
 const url = 'http://127.0.0.1:8000/';
 
 const PopularWords = () => {
-
-  const [state, setState] = useState({
+  const [PopularWordsState, setPopularWordsState] = useState({
     Source: 1,
     AnalyzeBy: 'by_titles',
     WordsCount: 20,
@@ -27,21 +26,13 @@ const PopularWords = () => {
 
   const [chartSetting, setChartSettings] = useState()
 
-  useEffect(() => {
-    console.log(loader.loader && chartSetting)
-  })
-
   const [loader, setLoader] = useState({loader: false})
 
-//        4) Создать анимацию загрузки.
-//        5) Обработать ошибки запросов.
-
-  const AnalyzeSettings = JSON.stringify(state)
-
   const FetchAnalyzeSettings = async () => {
+    const AnalyzeSettings = JSON.stringify(PopularWordsState)
     setLoader({loader: true})
     try {
-      const response = await axios.post(`${url}get-top-words`, AnalyzeSettings, {'headers': {'accept': 'application/json', 'Content-Type': 'application/json'}});
+      const response = await axios.post('top-words', AnalyzeSettings, {'headers': {'accept': 'application/json', 'Content-Type': 'application/json'}});
       setChartSettings(response.data)
       setLoader({loader: false})
     } catch (e) {
@@ -49,15 +40,6 @@ const PopularWords = () => {
       console.error(e);
     }
   }
-
-
-
-  // try {
-  //   const response = await axios.get(url)
-  //   setLoader(!loader.loader)
-  // } catch (e) {
-  //
-  // }
 
   const analyzeSelectorChangeHandler = event => {
     let chose = '';
@@ -67,56 +49,56 @@ const PopularWords = () => {
       chose = 'by_texts'
     }
 
-    setState(state => ({
-      ...state,
+    setPopularWordsState(PopularWordsState => ({
+      ...PopularWordsState,
       AnalyzeBy: chose
     }))
   }
 
   const sourceSelectorChangeHandler = event => {
-    setState(state => ({
-      ...state,
+    setPopularWordsState(PopularWordsState => ({
+      ...PopularWordsState,
       Source: +event.target.value
     }))
   }
 
   const WordsCountChangeHandler = event => {
-    setState(state => ({
-      ...state,
+    setPopularWordsState(PopularWordsState => ({
+      ...PopularWordsState,
       WordsCount: event.target.value,
     }))
   }
 
   const NewsCountChangeHandler = event => {
-    setState(state => ({
-      ...state,
+    setPopularWordsState(PopularWordsState => ({
+      ...PopularWordsState,
       NewsCount: event.target.value,
     }))
   }
 
-  const checkBoxChangeHandler = (label) => {
-    setState(state => ({
-      ...state,
-      [label]: !state[label]
+  const checkBoxChangeHandler = label => {
+    setPopularWordsState(PopularWordsState => ({
+      ...PopularWordsState,
+      [label]: !PopularWordsState[label]
     }))
   }
 
   const sourceSelector = <Select
-    label='Источник'
-    value={state.category}
     onChange={sourceSelectorChangeHandler}
+    label='Источник'
+    value={PopularWordsState.category}
     options={[
-      {text: 'Риа новости', value: 1},
-      {text: 'ТАСС', value: 2},
-      {text: 'Lenta.ru', value: 3},
-      {text: 'Комсомольская правда', value: 4}
+      {text: 'Lenta.ru', value: 1},
+      {text: 'Риа новости', value: 2},
+      {text: 'ТАСС', value: 3},
+      {text: 'Комсомольская правда', value: 4},
     ]}
   />
 
   const analyzeSelector = <Select
-    label='Анализ по:'
-    value={state.category}
     onChange={analyzeSelectorChangeHandler}
+    label='Анализ по:'
+    value={PopularWordsState.category}
     options={[
       {text: 'По заголовку', value: 1},
       {text: 'По тексту', value: 2},
@@ -124,51 +106,63 @@ const PopularWords = () => {
   />
 
   const WordCount = <Input
+    onChange={event => WordsCountChangeHandler(event)}
+    label='Слов:'
     index={'count' + 1}
-    label='Слова:'
     type='number'
     step={1}
     min={2}
     max={30}
-    onChange={event => WordsCountChangeHandler(event)}
   />
 
   const NewsCount = <Input
+    onChange={event => NewsCountChangeHandler(event)}
+    label='Новостей:'
     index={'count' + 1}
-    label='Количество новостей:'
     type='number'
     step={20}
     min={20}
-    max={1000}
-    onChange={event => NewsCountChangeHandler(event)}
+    max={400}
   />
 
-  const checkBox = <CheckBox checkValues={[
-    {label: 'Nouns', text: 'Существительные'},
-    {label: 'Verbs', text: 'Глаголы'},
-    {label: 'Percent', text: 'Отобразить в процентах'},
-  ]}
-     checkBoxChangeHandler={checkBoxChangeHandler}
-  >Выберите нужные графики:</CheckBox>
+  const checkBox = <CheckBox
+    checkBoxChangeHandler={checkBoxChangeHandler}
+    options={[
+      {label: 'Nouns', text: 'Существительные'},
+      {label: 'Verbs', text: 'Глаголы'},
+      {label: 'Percent', text: 'Отобразить в процентах'},
+    ]}
+  >
+    Параметры анализатора:
+  </CheckBox>
 
   return (
     <div className='PopularWords'>
-      <div className="ToolBar">
+      <div className="PopularWordsToolBar">
         { sourceSelector }
         { analyzeSelector }
         { NewsCount }
         { WordCount }
+        <span className="break"/>
         { checkBox }
         <Button onClick={FetchAnalyzeSettings}>Анализ</Button>
       </div>
 
-      <div className='Charts'>
-        { !loader.loader && chartSetting ? (
+      <div className='PopularWordsCharts'>
+
+        { loader.loader
+          ? <Loader/>
+          : chartSetting
+            ? (
           <>
-            <DoughnutChart chartSetting={chartSetting}/>
-            <VerticalBarCharts chartSetting={chartSetting}/>
+            <DoughnutChart chartSetting={chartSetting.items}/>
+            <VerticalBarCharts
+              title='топ слов'
+              chartSetting={chartSetting.items}
+              label={`Анализ ${chartSetting.words_count} слов.`}/>
           </>
-        ) : null}
+        )
+            : null}
       </div>
     </div>
   );

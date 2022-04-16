@@ -17,5 +17,5 @@
 .CheckBox input, label  {
     font-size: 17px;
     cursor: pointer;
-
+    padding-left: 3px;
 }

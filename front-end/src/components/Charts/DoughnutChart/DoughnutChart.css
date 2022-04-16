@@ -1,3 +1,6 @@
 .Doughnut {
-    width: 50vw;
+    max-width: 39%;
+    min-width: 33%;
+    max-height: 100%;
+    flex: 1 0 100px;
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import './VerticalBarChart.css';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,6 +10,7 @@ import {
   Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
+import { Color } from '../../../hoc/Layout/Layout';
 
 const VerticalBarChart = props => {
   ChartJS.register(
@@ -28,7 +30,7 @@ const VerticalBarChart = props => {
       },
       title: {
         display: true,
-        text: 'Chart.js Bar Chart',
+        text: `Столбчатая диаграмма ${props.title}.`,
       },
     },
   };
@@ -37,72 +39,22 @@ const VerticalBarChart = props => {
     return item['label'];
   })
 
-  const renderDatasets = () => {
-    props.chartSetting.map((item) => {
-      return (
-        {
-          label: item['label'],
-          data: item['count'],
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)',
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)',
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)',
-          ],
-        }
-      )
-    })
-  }
-
   const data = {
     labels,
     datasets: [
       {
-        label: 'Найдено в 400-ах новостях',
+        label: props.label,
         data: props.chartSetting.map((item) => {
           return item['count'];
         }),
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-        ],
+        backgroundColor: Color,
       }
     ],
   };
 
   return (
     <div className='VerticalBarChart'>
-      <Bar options={options} data={data} />;
+      <Bar options={options} data={data} />
     </div>
   );
 };
