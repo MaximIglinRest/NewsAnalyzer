@@ -1,17 +1,17 @@
 ### Установка с помощью окружения poetry
-1. ``poetry shell``
+    poetry shell
 
-2. ``poetry install`` 
+    poetry install 
 
 ### Установка с помощью окружения python-venv
-1. ``python<your version> -m venv env``
+    python<your version> -m venv env
 
-2. ``. ./env/bin/activate``
+    . ./env/bin/activate
 
-3. ``pip install -r requirements.txt``
+    pip install -r requirements.txt
 
 ### Запуск:
-`` uvicorn server:app --reload --port 8000``
+    uvicorn server:app --reload --port 8000
 
 
 
