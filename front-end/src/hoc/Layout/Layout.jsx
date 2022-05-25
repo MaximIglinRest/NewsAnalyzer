@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './Layout.css';
 import Header from '../../components/header/header';
+import {connect} from "react-redux";
+import {getSearchHistory, setSessionCookie} from "../../store/actions/Archive";
 
 export const Color = [
   'rgba(255, 99, 132, 0.3)',
@@ -43,6 +45,11 @@ export const Color = [
 ]
 
 const Layout = props => {
+  useEffect(() => {
+    if(document.cookie = '') props.setSessionCookie()
+    if(props.searchHistory.length == 0) props.getSearchHistory()
+  }, [document.cookie])
+
   return (
     <div className='Layout'>
       <Header/>
@@ -53,4 +60,17 @@ const Layout = props => {
   );
 };
 
-export default Layout;
+function mapStateToProps(state) {
+  return {
+    searchHistory: state.Archive.searchHistory
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    setSessionCookie: () => dispatch(setSessionCookie()),
+    getSearchHistory: () => dispatch(getSearchHistory())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Layout);

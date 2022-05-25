@@ -21,9 +21,10 @@ export const fetchAnalyzeSettings = (analyzeSettings, pass) => {
     if (pass == 'category-activity') dispatch(fetchAnalyzeSettingsAnCStart());
     try {
       const response = await axios.post(pass, analyzeSettings, {
+        withCredentials: true,
         'headers': {
           'accept': 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         }
       });
 
@@ -45,3 +46,5 @@ export const fetchCategoriesList = () => {
     dispatch(fetchCategoriesListSuccess(response.data))
   }
 }
+
+

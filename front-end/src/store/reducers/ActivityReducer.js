@@ -2,7 +2,7 @@ import { createReducer } from "@reduxjs/toolkit";
 import {
   fetchAnalyzeSettingsAnStart,
   fetchAnalyzeSettingsAnSuccess,
-  fetchAnalyzeSettingsAnError
+  fetchAnalyzeSettingsAnError, insertHistorySettingsAn
 }
   from "../actions/actions";
 
@@ -21,5 +21,8 @@ export default createReducer(initialState, {
   },
   [fetchAnalyzeSettingsAnError]: state => {
     state.loading = false
+  },
+  [insertHistorySettingsAn]: (state,action) => {
+    state.chartSettings = action.payload.Response
   }
 })

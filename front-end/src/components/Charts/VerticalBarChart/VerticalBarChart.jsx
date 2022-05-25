@@ -12,44 +12,40 @@ import {
 import { Bar } from 'react-chartjs-2';
 import { Color } from '../../../hoc/Layout/Layout';
 
-const VerticalBarChart = props => {
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend
-  );
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
+const VerticalBarChart = props => {
   const options = {
     responsive: true,
     plugins: {
       legend: {
-        position: 'top',
+        position: 'top'
       },
       title: {
         display: true,
-        text: `Столбчатая диаграмма ${props.title}.`,
-      },
-    },
+        text: `Столбчатая диаграмма ${props.title}.`
+      }
+    }
   };
 
-  const labels = props.chartSetting.map((item) => {
-    return item['label'];
-  })
+  const labels = props.chartSetting.map(item => item['label'])
 
   const data = {
     labels,
     datasets: [
       {
         label: props.label,
-        data: props.chartSetting.map((item) => {
-          return item['count'];
-        }),
-        backgroundColor: Color,
+        data: props.chartSetting.map(item => item['count']),
+        backgroundColor: Color
       }
-    ],
+    ]
   };
 
   return (

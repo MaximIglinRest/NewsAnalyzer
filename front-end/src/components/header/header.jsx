@@ -16,6 +16,7 @@ import Logo from "../Logo/Logo";
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import Archive from "../archive/archive";
 
 const Header = () => {
   const [value, setValue] = useState(0);
@@ -51,21 +52,20 @@ const Header = () => {
         setValue(0)
         break;
     }
-    // console.log(`path: ${pathname}, value: ${value}`)
   })
 
   return (
     <AppBar position="static" sx={{background: "#fff", borderBottom: 1, borderColor: 'divider', minHeight: '64px'}}>
       <Toolbar>
-        <Typography
-          variant="h6"
-          noWrap
-          component="div"
-          sx={{ mr: 2 }}
-        >
-          <Logo/>
-        </Typography>
         <Hidden mdDown>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ mr: 2 }}
+          >
+            <Logo/>
+          </Typography>
           <Tabs
             sx={{marginRight: "auto", marginTop: 'auto'}}
             indicatorColor="primary"
@@ -76,8 +76,13 @@ const Header = () => {
           >
             {renderLinks(links)}
           </Tabs>
+          <Archive/>
         </Hidden>
         <Hidden mdUp>
+          <Archive/>
+
+          <Logo/>
+
           <IconButton
             size="large"
             onClick={() => setOpen(true)}

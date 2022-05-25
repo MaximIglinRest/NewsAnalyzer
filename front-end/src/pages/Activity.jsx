@@ -104,8 +104,6 @@ const Activity = props => {
         {name: 'VerticalBar', label: 'Столбчатая'},
         {name: 'Line', label: 'Кривая'},
       ].map(item => {
-        let i = 0
-        i++
         return (
           <FormControlLabel
             key={item.label}
@@ -133,6 +131,7 @@ const Activity = props => {
           size="large"
           onClick={() => props.fetchAnalyzeSettings(analyzeSettings)}
           sx={{m: 'auto 50px 16px auto'}}
+          disabled={props.loading}
         >
           Анализ
         </Button>

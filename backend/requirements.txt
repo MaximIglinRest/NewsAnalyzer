@@ -46,6 +46,7 @@ pydantic==1.9.0
 pyee==8.2.2
 pyflakes==2.4.0
 pyhumps==3.5.3
+pymongo==4.1.1
 pymorphy2==0.9.1
 pymorphy2-dicts-ru==2.4.417127.4579844
 pyparsing==3.0.8
@@ -54,6 +55,7 @@ pyquery==1.4.3
 pytest==7.1.2
 pytest-factoryboy==2.2.0
 python-dateutil==2.8.2
+python-dotenv==0.20.0
 pytz==2022.1
 requests==2.27.1
 requests-html==0.10.0

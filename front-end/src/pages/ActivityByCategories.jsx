@@ -219,6 +219,7 @@ const ActivityByCategories = props => {
           disabled={analyzeSettings.Categories.length == 0 && !props.multipleLoading}
           onClick={() => props.fetchAnalyzeSettings(analyzeSettings)}
           sx={{m: 'auto 50px 16px auto'}}
+          disabled={props.loading}
         >
           Анализ
         </Button>

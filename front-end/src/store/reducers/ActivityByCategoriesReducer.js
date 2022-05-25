@@ -4,7 +4,8 @@ import {
   fetchAnalyzeSettingsAnCSuccess,
   fetchAnalyzeSettingsAnCError,
   fetchCategoriesListSuccess,
-  fetchCategoriesListStart
+  fetchCategoriesListStart,
+  insertHistorySettingsAnC
 }
   from "../actions/actions";
 
@@ -33,4 +34,7 @@ export default createReducer(initialState, {
   [fetchAnalyzeSettingsAnCError]: state => {
     state.loading = false
   },
+  [insertHistorySettingsAnC]: (state,action) => {
+    state.chartSettings = action.payload.Response
+  }
 })

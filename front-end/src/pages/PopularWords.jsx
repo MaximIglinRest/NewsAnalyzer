@@ -151,7 +151,8 @@ const PopularWords = props => {
         let i = 0
         i++
         return (
-          <FormControlLabel key={item.label}
+          <FormControlLabel
+            key={item.label}
             control={
               <Switch checked={analyzeSettings[item.name]} onChange={switchChangeHandler} name={item.name} />
             }
@@ -178,6 +179,7 @@ const PopularWords = props => {
           size="large"
           onClick={() => props.fetchAnalyzeSettings(analyzeSettings)}
           sx={{m: 'auto 50px 16px auto'}}
+          disabled={props.loading}
         >
           Анализ
         </Button>
@@ -197,6 +199,7 @@ const PopularWords = props => {
 function mapStateToProps(state) {
   return {
     chartSettings: state.PopularWords.chartSettings,
+    cancel: state.cancel,
     loading: state.PopularWords.loading
   }
 }

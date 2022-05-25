@@ -4,8 +4,9 @@ import { Doughnut } from 'react-chartjs-2';
 import './DoughnutChart.css'
 import { Color } from '../../../hoc/Layout/Layout';
 
+ChartJS.register(ArcElement, Tooltip, Legend);
+
 const DoughnutChart = props => {
-  ChartJS.register(ArcElement, Tooltip, Legend);
   const data = {
     labels: props.chartSetting.map((item) => {
       return item['label'];
@@ -13,15 +14,13 @@ const DoughnutChart = props => {
     datasets: [
       {
         label: '# of Votes',
-        data: props.chartSetting.map((item) => {
-          return item['count'];
-        }),
+        data: props.chartSetting.map(item => item['count']),
         backgroundColor: Color,
         borderColor : Color,
         borderWidth: 1,
         scale: 300,
-      },
-    ],
+      }
+    ]
   }
 
   return (

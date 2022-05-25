@@ -14,3 +14,9 @@ export const fetchAnalyzeSettingsAnCError = createAction('FETCH_ANALYZE_SETTINGS
 
 export const fetchCategoriesListStart = createAction('FETCH_CATEGORIES_LIST-START')
 export const fetchCategoriesListSuccess = createAction('FETCH_CATEGORIES_LIST_SUCCESS')
+
+export const getSearchHistorySuccess = createAction('GET_SEARCH_HISTORY_SUCCESS')
+
+export const insertHistorySettingsPW = createAction('INSERT_HISTORY_SETTINGS_PW')
+export const insertHistorySettingsAn = createAction('INSERT_HISTORY_SETTINGS_AN')
+export const insertHistorySettingsAnC = createAction('INSERT_HISTORY_SETTINGS_AN_C')

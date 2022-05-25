@@ -13,17 +13,17 @@ import {
 import { Line } from 'react-chartjs-2';
 import { Color } from '../../../hoc/Layout/Layout';
 
-const LineChart = props => {
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
-  );
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
+const LineChart = props => {
   const options = {
     responsive: true,
     plugins: {
@@ -32,27 +32,23 @@ const LineChart = props => {
       },
       title: {
         display: true,
-        text: `Линейная диаграмма ${props.title}.`,
-      },
-    },
+        text: `Линейная диаграмма ${props.title}.`
+      }
+    }
   };
 
-  const labels = props.chartSetting.map((item) => {
-    return item['label'];
-  })
+  const labels = props.chartSetting.map(item => item['label'])
 
   const data = {
     labels,
     datasets: [
       {
         label: props.label,
-        data: props.chartSetting.map((item) => {
-          return item['count'];
-        }),
+        data: props.chartSetting.map(item => item['count']),
         borderColor: Color,
         backgroundColor: Color,
       }
-    ],
+    ]
   };
 
   return (

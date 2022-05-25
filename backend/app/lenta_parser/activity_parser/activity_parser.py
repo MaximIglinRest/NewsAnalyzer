@@ -23,7 +23,7 @@ def collect_news_times(url: str):
         if response.status_code == 404:
             break
         parsed_response = BeautifulSoup(response.text, "lxml")
-        news_current_page_items = parsed_response.findAll("span", "time")
+        news_current_page_items = parsed_response.findAll("time", "card-full-news__info-item")
         if len(news_current_page_items) == 0:
             break
         news_time_items += [news_item.text for news_item in news_current_page_items]
